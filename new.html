@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenLayers Map with Google Maps Base Layer</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.4.3/css/ol.css"
+      type="text/css"
+    />
+    <script src="getcurrentEvents.js"></script>
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.4.3/build/ol.js"></script>
+    <!-- <script src="https://unpkg.com/ol-layerswitcher@3.2.1/dist/ol-layerswitcher.js"></script> -->
+    <style>
+      #map {
+        height: 500px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <label for="LlayerSelect"></label>
+    <select id="LlayerSelect">
+      <option>--Choose a floor in L building--</option>
+      <option value="Floor 2">Floor 2</option>
+      <option value="Floor 3">Floor 3</option>
+      <option value="Floor 4½">Floor 4½</option>
+      <option value="Floor 5½">Floor 5½</option>
+    </select>
+
+    <label for="QlayerSelect"></label>
+    <select id="QlayerSelect">
+      <option>--Choose a floor in Q building--</option>
+      <option value="Floor 2">Floor 2</option>
+      <option value="Floor 3">Floor 3</option>
+      <option value="Floor 4½">Floor 4½</option>
+      <option value="Floor 5½">Floor 5½</option>
+    </select>
+
+    <label for="defaultSelector"></label>
+    <select id="defaultSelector">
+      <option>--click to start--</option>
+    </select>
+    <!-- <button id="showLayerButton">Choose floor</button> -->
+
+    <div id="map"></div>
+
+    <script>
+      var defaultSelector = document.getElementById("defaultSelector");
+      defaultSelector.style.display = "block";
+      var QlayerSelect = document.getElementById("QlayerSelect");
+      QlayerSelect.style.display = "none";
+      var LlayerSelect = document.getElementById("LlayerSelect");
+      LlayerSelect.style.display = "none";
+      // var showLayerButton = document.getElementById('showLayerButton');
+      var selectors = [LlayerSelect, QlayerSelect, defaultSelector];
+
+      var vectorLayerGroup = new ol.layer.Group({});
+
+      // create base map layer
+      var googleLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+          url: "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
+          attributions: "© Google Maps",
+        }),
+      });
+
+      // create map container and load base map
+      var map = new ol.Map({
+        target: "map",
+        layers: [googleLayer], // add google map
+        view: new ol.View({
+          center: ol.proj.fromLonLat([18.0716173, 59.3489465]), // set center
+          zoom: 16,
+        }),
+      });
+
+      //add base floor
+      var baseLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          url: "base.geojson",
+          format: new ol.format.GeoJSON(),
+        }),
+        style: new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: "rgb(213,216,220)",
+            width: 2,
+          }),
+          fill: new ol.style.Fill({
+            color: "rgb(242,242,242)",
+          }),
+        }),
+      });
+      map.addLayer(baseLayer);
+
+
+
+
+
+
+
+
+
+
+      // create a container for floors layers
+      var mapLayers = {};
+      // load geoJson
+      var geoJSONFiles = [
+        { name: "Floor 2", file: "Lbuilding//2.geojson" },
+        { name: "Floor 3", file: "Lbuilding//3.geojson" },
+        { name: "Floor 4½", file: "Lbuilding//45.geojson" },
+        { name: "Floor 5½", file: "Lbuilding//55.geojson" },
+      ];
+
+      // load geoJsons to mapLayers
+      geoJSONFiles.forEach(function (item) {
+        var source = new ol.source.Vector({
+          url: item.file,
+          format: new ol.format.GeoJSON(),
+        });
+
+        var layer = new ol.layer.Vector({
+          source: source,
+          title: item.name,
+          visible: false,
+          style: function (feature) {
+            var namn = feature.get("namn");
+            var matchingEvent = currentEvents.find(function (event) {
+              return event.room === namn;
+            });
+            var typ = feature.get("typ");
+            var color;
+            var eventInfo;
+            //Set text content, free or course ongoing
+            if (matchingEvent) {
+              //If course is ongoing
+              eventInfo =
+                matchingEvent.room +
+                "\n" +
+                typ +
+                "\n" +
+                matchingEvent.code +
+                ", " +
+                matchingEvent.event +
+                "\n " +
+                matchingEvent.teacher;
+            } else {
+              //If room is free
+              if (typ != "corridor") {
+                var eventInfo = namn + "\n " + typ + "\n" + "Free";
+              }
+            }
+            //Set feature style
+            if (typ === "corridor") {
+              color = "white"; // set corridor color
+            } else {
+              color = "rgb(224,254,254)"; // set rooms color
+            }
+            return new ol.style.Style({
+              text: new ol.style.Text({
+                text: eventInfo,
+                fill: new ol.style.Fill({ color: "black" }),
+                font: "bold 18px Calibri,sans-serif",
+                stroke: new ol.style.Stroke({
+                  color: "white",
+                  width: 2,
+                }),
+                scale: Math.pow(map.getView().getZoom().toString() / 20, 14),
+                // padding: [3, 3, 3, 3],
+                rotation: Math.PI / 3.2,
+                overflow: true,
+              }),
+              fill: new ol.style.Fill({
+                color: color,
+              }),
+              stroke: new ol.style.Stroke({
+                color: "rgb(193,239,254)",
+                width: 1,
+              }),
+            });
+          },
+        });
+        mapLayers[item.name] = layer;
+        map.addLayer(layer);
+        vectorLayerGroup.getLayers().push(layer);
+      });
+
+
+
+
+
+
+
+
+
+
+
+      //floor selector switching between buildings
+      selectors.forEach(function (selector) {
+        selector.addEventListener("change", function () {
+          var selectedLayerName = selector.value;
+          for (var key in mapLayers) {
+            if (mapLayers.hasOwnProperty(key)) {
+              if (key === selectedLayerName) {
+                mapLayers[key].setVisible(true);
+              } else {
+                mapLayers[key].setVisible(false);
+              }
+            }
+          }
+        });
+
+        var selectClick = new ol.interaction.Select({
+          condition: ol.events.condition.click,
+        });
+
+        var index = selector.id.indexOf("layerSelect");
+        var name = selector.id.substring(0, index);
+        console.log(name);
+        map.addInteraction(selectClick);
+        selectClick.on("select", function (e) {
+          if (e.selected.length > 0) {
+            var selectedFeature = e.selected[0];
+            var husetProperty = selectedFeature.get("huset");
+            if (husetProperty === name) {
+              selector.style.display = "block";
+            } else {
+              selector.style.display = "none";
+            }
+            selectClick.getFeatures().clear();
+          } else {
+            selector.style.display = "none";
+          }
+        });
+      });
+      var currentTime = new Date();
+      // Create XMLHttpRequest
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "L.json", false);
+      xhr.send();
+      var course = JSON.parse(xhr.responseText);
+      var currentEvents = getcurrentEvents(course, currentTime);
+
+
+
+
+
+
+
+
+
+      
+    </script>
+  </body>
+</html>

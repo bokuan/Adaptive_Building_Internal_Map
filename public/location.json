@@ -1,0 +1,152 @@
+[
+    {
+      "namn": "Q15",
+      "location": "Q-building Floor 1",
+      "coordinates": [2011142.084775354, 8256446.582231514]
+    },
+    {
+        "namn": "Q13",
+        "location": "Q-building Floor 1",
+        "coordinates":[2011156.6084544118, 8256457.0269751595]
+      },
+      {
+        "namn": "Q17",
+        "location": "Q-building Floor 1",
+        "coordinates": [2011123.871081364, 8256433.935476303]
+      },
+      {
+        "namn": "Q11",
+        "location": "Q-building Floor 1",
+        "coordinates": [2011168.3526792456, 8256465.387275129]
+      },
+      {
+        "namn": "Q21",
+        "location": "Q-building Floor 2",
+        "coordinates": [2011185.6704434645, 8256432.94133387]
+      },
+      {
+        "namn": "Q22",
+        "location": "Q-building Floor 2",
+        "coordinates": [2011166.1630738333, 8256464.192946561]
+      },
+      {
+        "namn": "Q24",
+        "location": "Q-building Floor 2",
+        "coordinates": [2011139.5535112894, 8256444.809160237]
+      },
+      {
+        "namn": "Q26",
+        "location": "Q-building Floor 2",
+        "coordinates": [2011124.5583958703, 8256434.3124255715]
+      },
+      {
+        "namn": "XQ23",
+        "location": "Q-building Floor 2",
+        "coordinates": [2011167.107618217, 8256420.048739166]
+      },
+      {
+        "namn": "XQ25",
+        "location": "Q-building Floor 2",
+        "coordinates": [2011155.3560234613, 8256411.298035897]
+      },
+      {
+        "namn": "Q31",
+        "location": "Q-building Floor 3",
+        "coordinates": [2011165.1678152164, 8256463.1976606045]
+      },
+      {
+        "namn": "Q33",
+        "location": "Q-building Floor 3",
+        "coordinates": [2011127.7455079693, 8256436.126225239]
+      },
+      {
+        "namn": "Q34",
+        "location": "Q-building Floor 3",
+        "coordinates": [2011175.1205471999, 8256425.377268136]
+      },
+      {
+        "namn": "Q36",
+        "location": "Q-building Floor 3",
+        "coordinates": [2011149.8405864579, 8256407.462339631]
+      },
+      {
+        "namn": "Q1",
+        "location": "Q-building Floor 3",
+        "coordinates": [2011189.4524900033, 8256497.4350856]
+      },
+      {
+        "namn": "XQ32",
+        "location": "Q-building Floor 3",
+        "coordinates": [2011193.234527428, 8256439.510154659]
+      },
+      {
+        "namn": "L21",
+        "location": "L-building Floor 2",
+        "coordinates": [2011482.182334182, 8256418.929739249]
+      },
+      {
+        "namn": "L22",
+        "location": "L-building Floor 2",
+        "coordinates": [2011492.9312912847, 8256403.801580438]
+      },
+      {
+        "namn": "oaSen",
+        "location": "L-building Floor 2",
+        "coordinates": [2011444.7600360468, 8256444.365210005]
+      },
+      {
+        "namn": "L1",
+        "location": "L-building Floor 3",
+        "coordinates": [2011484.3719304802, 8256416.099427845]
+      },
+      {
+        "namn": "L31",
+        "location": "L-building Floor 3",
+        "coordinates": [2011470.0399876768, 8256437.199238603]
+      },
+      {
+        "namn": "Bure",
+        "location": "L-building Floor 3",
+        "coordinates": [2011438.3902806523, 8256454.517002824]
+      },
+      {
+        "namn": "L41",
+        "location": "L-building Floor 4½",
+        "coordinates": [2011470.847179702, 8256434.928650552]
+      },
+      {
+        "namn": "L42",
+        "location": "L-building Floor 4½",
+        "coordinates": [2011478.6313084352, 8256424.065054034]
+      },
+      {
+        "namn": "L43",
+        "location": "L-building Floor 4½",
+        "coordinates": [2011486.5129222022, 8256412.996728082]
+      },
+      {
+        "namn": "L44",
+        "location": "L-building Floor 4½",
+        "coordinates": [2011494.1982578232, 8256402.022249639]
+      },
+      {
+        "namn": "Jacob Faggot",
+        "location": "L-building Floor 4½",
+        "coordinates": [2011438.0916985106, 8256454.517000546]
+      },
+      {
+        "namn": "L51",
+        "location": "L-building Floor 5½",
+        "coordinates": [2011474.120616355, 8256430.232318925]
+      },
+      {
+        "namn": "L52",
+        "location": "L-building Floor 5½",
+        "coordinates": [2011490.244052009, 8256407.938179601]
+      },
+      {
+        "namn": "MacLean",
+        "location": "L-building Floor 5½",
+        "coordinates": [2011438.0916985106, 8256454.317941988]
+      }
+]

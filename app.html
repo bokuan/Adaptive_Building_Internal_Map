@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ABMap KTH</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.4.3/css/ol.css"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.4.3/build/ol.js"></script>
+    <script src="/getcurrentEvents.js"></script>
+
+    <style>
+      #map {
+        height: 520px;
+        width: 98%;
+        margin: 0 auto;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+       <link rel="icon" href="/ABM.png" type="image/png">
+  </head>
+
+  <body class="bg-light">
+    <style>
+      #map {
+        margin-top: -25px;
+      }
+
+      .header {
+        margin-bottom: -25px;
+      }
+    </style>
+    <link rel="stylesheet" type="text/css" href="/floating-toast.css" />
+
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <div class="container-fluid">
+        <div class="col-sm-6">
+          <a class="navbar-brand d-flex align-items-center" href="/home">
+            <img src="/ABM_X_KTH.png" alt="Bootstrap" width="100" height="40" />
+            <span class="text-white mt-1" style="font-size: 20px;padding-left: 5px;">ABMap x KTH</span>
+          </a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+          <span class="navbar-toggler-icon"></span>       
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navmenu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/home">HOME</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/home#dteam">CONTACT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/kth/sv">SV</a>
+            </li>
+          </ul>
+        </div>
+  
+      </div>
+    </nav>
+
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="d-flex">
+          <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+              <form class="d-flex justify-content-start align-items-center" role="search">
+                <input class="form-control me-2" id="searchCourseT" type="search" placeholder="XX9999" aria-label="Search" style="width: 120px" />
+                <button class="btn btn-outline-success bg-white" id="searchCourseB" type="button">Search Course Code</button>
+              </form>
+            </div>
+          </nav>
+          <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+              <form class="d-flex justify-content-start align-items-center" role="search">
+                <input class="form-control me-2" id="searchRoomT" type="search" placeholder="Search" aria-label="Search" style="width: 120px" />
+                <button class="btn btn-outline-success bg-white" id="searchRoomB" type="button">Search Classroom</button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+    
+
+    <div
+      id="searchCourseP"
+      class="toast floating-toast"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    >
+      <div class="toast-header bg-white">
+        <strong class="me-auto" style="color: brown"></strong>
+        <button
+          id="closer1"
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+          style="float: right"
+        ></button>
+      </div>
+      <div class="toast-body"></div>
+    </div>
+
+    <div id="map">
+      <link rel="stylesheet" type="text/css" href="/selection.css" />
+      <div class="form-group mt-0">
+        <label for="LlayerSelect"></label>
+        <select
+          class="form-control custom-select floating-selection"
+          style="width: 300px"
+          id="LlayerSelect"
+        >
+          <option>--Choose a floor in L building--</option>
+          <option value="L-building Floor 2">Floor 2</option>
+          <option value="L-building Floor 3">Floor 3</option>
+          <option value="L-building Floor 4½">Floor 4½</option>
+          <option value="L-building Floor 5½">Floor 5½</option>
+        </select>
+        <label for="QlayerSelect"></label>
+        <select
+          class="form-control custom-select floating-selection"
+          style="width: 300px"
+          id="QlayerSelect"
+        >
+          <option>--Choose a floor in Q building--</option>
+          <option value="Q-building Floor 1">Floor 1</option>
+          <option value="Q-building Floor 2">Floor 2</option>
+          <option value="Q-building Floor 3">Floor 3</option>
+        </select>
+        <label for="BiblioteklayerSelect"></label>
+        <select
+          class="form-control custom-select floating-selection"
+          style="width: 300px"
+          id="BiblioteklayerSelect"
+        >
+          <option>--Choose a floor in Bibliotek--</option>
+          <option value="Bibliotek-building Floor 2">Floor 2</option>
+          <option value="Bibliotek-building Floor 3">Floor 3</option>
+          <option value="Bibliotek-building Floor 4">Floor 4</option>
+        </select>
+        <label for="defaultSelector"></label>
+        <select
+          class="form-control custom-select floating-selection"
+          style="width: 300px"
+          id="defaultSelector"
+        >
+          <option>-- Click on a KTH building --</option>
+        </select>
+      </div>
+      <script src="/main.js"></script>
+    </div>
+
+  </body>
+
+  <!-- Footer-->
+  <div class="mt-3 pt-4 pb-2 bg-light">
+    <div class="container text-center">
+      <div class="row">
+        <div class="col-lg-4 mb-lg-0">
+          <h5>About ABMap</h5>
+          <ul class="contact-info list-unstyled">
+            <li>
+              <a
+                href="/home"
+                class="text-muted"
+                >About ABMap </a
+              >
+            </li>
+            <li>
+              <a
+                href="/home#dteam"
+                class="text-muted"
+                >Development Team </a
+              >
+            </li>
+            <li>
+              <a
+                href="/changelog"
+                class="text-muted"
+                >Changelog</a
+              >
+            </li>
+          </ul>
+          <!-- <p class="text-muted">For more information contact ABMap team</p> -->
+        </div>
+        <div class="col-lg-4">
+          <h5>External Links</h5>
+          <ul class="links list-unstyled">
+            <li>
+              <a href="https://www.kth.se/en" class="text-muted">KTH Website</a>
+            </li>
+            <li>
+              <a href="https://www.google.com/maps" class="text-muted"
+                >Google Map</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://cloud.timeedit.net/kth/web/?en=t"
+                class="text-muted"
+                >Timeedit KTH</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-4">
+          <h5>Service&Support</h5>
+          <ul class="links list-unstyled">
+            <li><a href="#" class="text-muted">User Instruction</a></li>
+            <li><a href="/home#dteam" class="text-muted">Feedback</a></li>
+            <li><a href="/home#dteam" class="text-muted">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-3 bg-dark text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7 text-center text-md-left">
+          <p class="mb-md-0">&copy; 2023 ABMap Team. All rights reserved.</p>
+        </div>
+        <div class="col-md-5 text-center text-md-right">
+          <p class="mb-0">ABMap KTH v0.2.0 2023-10-29</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</html>
